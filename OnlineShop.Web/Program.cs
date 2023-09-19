@@ -17,7 +17,11 @@ namespace OnlineShop.Web
             builder.Services.AddDbContext<OnlineShopDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("MyShopDb")));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IVendorRepository, VendorRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IVendorService, VendorService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

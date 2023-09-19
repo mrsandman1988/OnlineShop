@@ -1,8 +1,37 @@
-﻿
+﻿@using OnlineShop.Core.ViewModels
+@model List<ProductAdminListViewModel>
 @{
    
     Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Product List</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Categories</th>
+            <th>Price</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.CategoryName</td>
+                <td>@item.Price</td>
+                <td>
+                    <a href="#">Edit</a>
+                </td>
+                <td>
+                    <a href="#">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 

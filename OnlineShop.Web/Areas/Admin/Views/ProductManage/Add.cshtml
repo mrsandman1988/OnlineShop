@@ -1,0 +1,66 @@
+﻿@model AddProductViewModel
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+<h1>Add new product</h1>
+
+<form method="post">
+    <div>
+        <label>
+            Product Name:
+            <input asp-for="Name" />
+        </label>
+    </div>
+   <div>
+        <label>
+            Product Price:
+            <input asp-for="Price" />
+        </label>
+   </div>
+   <div>
+        <label>
+            Product Discount:
+            <input asp-for="Discount" />
+        </label>
+   </div>
+  
+     <div>
+        <label>
+            Product description
+            <textarea asp-for="Description">
+
+        </textarea>
+        </label>
+     </div>
+  
+     <div>
+        <label>
+            Product Vendor:
+            <select asp-for="VendorId">
+                <option>--Select--</option>
+                @foreach (VendorViewModel item in ViewBag.Vendors)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+        </label>
+     </div>
+   
+    <div>
+        @foreach(CategoryViewModel item in ViewBag.Categories)
+        {
+            <div>
+                <label>
+
+                    <input type="checkbox" value="@item.Id" name="CategoryIds" />
+                    @item.Name
+                </label>
+                </div>
+          
+            
+        }
+    </div>
+    <input type="submit" value="Save" />
+</form>

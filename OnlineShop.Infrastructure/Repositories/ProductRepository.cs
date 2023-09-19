@@ -1,4 +1,5 @@
-﻿using OnlineShop.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Core.Entities;
 using OnlineShop.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,10 @@ namespace OnlineShop.Infrastructure.Repositories
 
         public List<Product> GetAll()
         {
-            return _context.Products.ToList();
+            return _context.Products
+                
+                .Include(p=>p.Categories)
+                .ToList();
         }
 
         public Product GetById(int id)
