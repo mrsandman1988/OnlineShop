@@ -13,5 +13,7 @@ namespace OnlineShop.Core.Interfaces
         Category GetById(int id);
         List<Category> GetAll();
         void Delete(Category category);
+        void AttachRange(List<Category> categories);
+        void ChengeTracking(Category category);
     }
 }

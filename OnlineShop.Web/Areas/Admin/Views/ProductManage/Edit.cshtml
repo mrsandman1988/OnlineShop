@@ -1,42 +1,42 @@
 ﻿@model AddProductViewModel
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Edit";
     Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
 }
 
-<h1>Add new product</h1>
+<h1>Edit product: @Model.Name</h1>
 
 <form method="post">
+    <input type="hidden" asp-for="Id" />
     <div>
         <label>
             Product Name:
             <input asp-for="Name" />
-            <span asp-validation-for="Name"></span>
         </label>
     </div>
-   <div>
+    <div>
         <label>
             Product Price:
             <input asp-for="Price" />
         </label>
-   </div>
-   <div>
+    </div>
+    <div>
         <label>
             Product Discount:
             <input asp-for="Discount" />
         </label>
-   </div>
-  
-     <div>
+    </div>
+
+    <div>
         <label>
             Product description
             <textarea asp-for="Description">
 
         </textarea>
         </label>
-     </div>
-  
-     <div>
+    </div>
+
+    <div>
         <label>
             Product Vendor:
             <select asp-for="VendorId">
@@ -47,22 +47,27 @@
                 }
             </select>
         </label>
-     </div>
-   
+    </div>
+
     <div>
-        @foreach(CategoryViewModel item in ViewBag.Categories)
+        @foreach (CategoryViewModel item in ViewBag.Categories)
         {
             <div>
                 <label>
-
-                    <input type="checkbox" value="@item.Id" name="CategoryIds" />
+                  @*  @if(Model.CategoryIds.Contains(item.Id)){
+ <input type="checkbox" value="@item.Id" name="CategoryIds" checked="checked" />
+                     }
+                    else
+                    {
+                        <input type="checkbox" value="@item.Id" name="CategoryIds" />
+                    }*@
+                <input type="checkbox" value="@item.Id" name="CategoryIds" checked="@(Model.CategoryIds.Contains(item.Id)?"checked":null)" />
                     @item.Name
                 </label>
-                </div>
-          
-            
+            </div>
+
+
         }
-        <span asp-validation-for="CategoryIds"></span>
     </div>
     <input type="submit" value="Save" />
 </form>

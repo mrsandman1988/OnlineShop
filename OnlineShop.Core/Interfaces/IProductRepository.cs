@@ -13,5 +13,6 @@ namespace OnlineShop.Core.Interfaces
         Product GetById(int id);
         List<Product> GetAll();
         void Delete(Product product);
+        int Count();
     }
 }

@@ -6,7 +6,19 @@
 }
 
 <h1>Product List</h1>
+<a asp-action="Add">Add new product</a>
 
+<div>
+    <form method="get">
+        <div>
+            <select name="pageSize">
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+        <button type="submit">Filter</button>
+    </form>
+</div>
 <table border="1">
     <thead>
         <tr>
@@ -25,7 +37,7 @@
                 <td>@item.CategoryName</td>
                 <td>@item.Price</td>
                 <td>
-                    <a href="#">Edit</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                 </td>
                 <td>
                     <a href="#">Delete</a>
@@ -34,4 +46,12 @@
         }
     </tbody>
 </table>
-
+@for(int pageindex = 1;pageindex <= ViewBag.PageCount; pageindex++)
+{
+    if (pageindex == ViewBag.PageIndex)
+    {
+        <span class="indexPage">@pageindex</span>
+    }else {
+    <a   asp-route-pageIndex="@pageindex">@pageindex</a>
+    }
+}

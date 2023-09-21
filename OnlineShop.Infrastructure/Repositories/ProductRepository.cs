@@ -37,7 +37,13 @@ namespace OnlineShop.Infrastructure.Repositories
 
         public Product GetById(int id)
         {
-            return _context.Products.Find(id);
+            return _context.Products.Include(p=>p.Categories).
+                FirstOrDefault(p=>p.Id == id);
+        }
+
+        public int Count()
+        {
+            return _context.Products.Count();
         }
     }
 }

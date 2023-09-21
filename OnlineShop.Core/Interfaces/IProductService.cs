@@ -8,6 +8,9 @@ namespace OnlineShop.Core.Interfaces
 {
     public interface IProductService
     {
-        List<ProductAdminListViewModel> GetAllForAdmin();
+       Tuple<int, List<ProductAdminListViewModel>> GetAllForAdmin(int pageSize, int pageIndex);
+        void Add(AddProductViewModel model);
+        AddProductViewModel GetById(int Id);
+        void Update(AddProductViewModel model);
     }
 }
