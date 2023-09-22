@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Core.Interfaces;
 using OnlineShop.Core.ViewModels;
+using OnlineShop.Core.ViewModels.Products;
 
 namespace OnlineShop.Web.Areas.Admin.Controllers
 {
@@ -16,11 +17,11 @@ namespace OnlineShop.Web.Areas.Admin.Controllers
             _vendorService = vendorService;
             _categoryService = categoryService;
         }
-        public IActionResult Index(int pageSize = 1, int pageIndex = 1)
+        public IActionResult Index(AdminProductFilter model)
         {
-            var data = _productService.GetAllForAdmin(pageSize, pageIndex);
+            var data = _productService.GetAllForAdmin(model);
             ViewBag.PageCount = data.Item1;
-            ViewBag.PageIndex = pageIndex;
+            //ViewBag.PageIndex = pageIndex;
             return View(data.Item2);
         }
         [HttpGet]

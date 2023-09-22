@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OnlineShop.Core.Entities;
+using OnlineShop.Core.ViewModels.Products;
+
 namespace OnlineShop.Core.Services
 {
     public class ProductService : IProductService
@@ -47,12 +49,10 @@ namespace OnlineShop.Core.Services
             _uow.SaveChanges();
         }
 
-        public Tuple<int, List<ProductAdminListViewModel>> GetAllForAdmin(int pageSize,int pageIndex)
+        public Tuple<int, List<ProductAdminListViewModel>> GetAllForAdmin(AdminProductFilter model)
         {
-            var data = _productrepository.GetAll()
-                .OrderBy(p=>p.Id)
-                .Skip((pageIndex-1)*pageSize)
-                .Take(pageSize);
+            var data = _productrepository.GetAll(model);
+                
             var productList = data.Select(p=>new ProductAdminListViewModel
             {
                 Id= p.Id,
@@ -62,8 +62,8 @@ namespace OnlineShop.Core.Services
             }).ToList();
 
 
-            var productCount = _productrepository.Count();
-            var pageCount = (int)Math.Ceiling( (double)productCount / pageSize);
+            var productCount = _productrepository.Count(model);
+            var pageCount = (int)Math.Ceiling( (double)productCount / model.PageSize);
             return Tuple.Create(pageCount, productList);
         }
 

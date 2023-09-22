@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Core.Entities;
 using OnlineShop.Core.Interfaces;
+using OnlineShop.Core.ViewModels.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +29,13 @@ namespace OnlineShop.Infrastructure.Repositories
             _context.Products.Remove(product);
         }
 
-        public List<Product> GetAll()
+        public List<Product> GetAll(AdminProductFilter model)
         {
-            return _context.Products
-                
+            var baseQuery = BaseQuery(model);
+            return baseQuery
+                .OrderByDescending(p => p.Id)
+                .Skip(model.SkipedCount)
+                .Take(model.PageSize)
                 .Include(p=>p.Categories)
                 .ToList();
         }
@@ -41,9 +46,20 @@ namespace OnlineShop.Infrastructure.Repositories
                 FirstOrDefault(p=>p.Id == id);
         }
 
-        public int Count()
+        public int Count(AdminProductFilter model)
         {
-            return _context.Products.Count();
+            var baseQuery = BaseQuery(model);
+            return baseQuery.Count();
+        }
+
+        private IQueryable<Product> BaseQuery(AdminProductFilter model)
+        {
+            // refactoring
+            return _context.Products
+                .Where(p => (model.Name == null || p.Name.ToLower().Contains(model.Name.ToLower()))
+                 && (!model.FromPrice.HasValue || p.Price >= model.FromPrice)
+                 && (!model.ToPrice.HasValue || p.Price <= model.ToPrice)
+                 && (model.CategoryId == null || p.Categories.Any(c => c.Id == model.CategoryId)));
         }
     }
 }

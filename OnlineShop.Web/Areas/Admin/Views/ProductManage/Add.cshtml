@@ -35,7 +35,14 @@
         </textarea>
         </label>
      </div>
-  
+  <div>
+      <label>
+          Product Status:
+          <select asp-for="ProductStatus" asp-items="Html.GetEnumSelectList<ProductStatusEnum>()">
+              <option>--Select--</option>
+          </select>
+      </label>
+  </div>
      <div>
         <label>
             Product Vendor:

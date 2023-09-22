@@ -1,4 +1,5 @@
 ﻿using OnlineShop.Core.Entities;
+using OnlineShop.Core.ViewModels.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace OnlineShop.Core.Interfaces
     {
         void Add(Product product);
         Product GetById(int id);
-        List<Product> GetAll();
+        List<Product> GetAll(AdminProductFilter model);
         void Delete(Product product);
-        int Count();
+        int Count(AdminProductFilter model);
     }
 }
